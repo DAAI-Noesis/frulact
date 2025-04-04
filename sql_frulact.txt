@@ -1,0 +1,5 @@
+FRULACT SQL DATABASE 
+
+
+Usernmae:frulactadmin
+Password:!Admin123
