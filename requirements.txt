@@ -1,0 +1,8 @@
+flask
+openai
+PyPDF2
+python-dotenv
+pdfplumber
+pytesseract
+pdf2image
+gunicorn
