@@ -330,6 +330,157 @@
             display: inline-block;
             animation: ellipsis 2s infinite;
         }
+
+        .message-content {
+            margin-top: 8px;
+            line-height: 1.5;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        /* Estilos para elementos Markdown */
+        .message-content h1, 
+        .message-content h2, 
+        .message-content h3, 
+        .message-content h4, 
+        .message-content h5, 
+        .message-content h6 {
+            margin-top: 16px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+        
+        .message-content h1 { font-size: 1.5em; }
+        .message-content h2 { font-size: 1.3em; }
+        .message-content h3 { font-size: 1.2em; }
+        .message-content h4 { font-size: 1.1em; }
+        .message-content h5 { font-size: 1em; }
+        .message-content h6 { font-size: 0.9em; }
+        
+        .message-content p {
+            margin-bottom: 12px;
+        }
+        
+        .message-content ul, 
+        .message-content ol {
+            margin-bottom: 12px;
+            padding-left: 24px;
+        }
+        
+        .message-content li {
+            margin-bottom: 4px;
+        }
+        
+        .message-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        .message-content a:hover {
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .message-content code {
+            background-color: rgba(0,0,0,0.05);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .message-content pre {
+            background-color: rgba(0,0,0,0.05);
+            padding: 12px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 12px;
+        }
+        
+        .message-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 12px;
+            margin-left: 0;
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+        
+        .message-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .message-content th, 
+        .message-content td {
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 8px 12px;
+            text-align: left;
+        }
+        
+        .message-content th {
+            background-color: rgba(0,0,0,0.03);
+            font-weight: 600;
+        }
+        
+        .message-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 12px 0;
+        }
+        
+        .message-content hr {
+            border: none;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            margin: 16px 0;
+        }
+        
+        .message-content strong {
+            font-weight: 600;
+        }
+        
+        .message-content em {
+            font-style: italic;
+        }
+        
+        .message-content del {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+        
+        .message-content mark {
+            background-color: rgba(255, 235, 59, 0.4);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .message-content .task-list-item {
+            list-style-type: none;
+            margin-left: -24px;
+        }
+        
+        .message-content .task-list-item-checkbox {
+            margin-right: 8px;
+        }
+        
+        .message-content .emoji {
+            font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Symbol", sans-serif;
+        }
+        
+        /* Estilo para mensagens de erro */
+        .message.error .message-content {
+            color: #e74c3c;
+        }
+        
+        /* Estilo para mensagens de carregamento */
+        .message.loading .message-content {
+            color: var(--text-light);
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -558,10 +709,29 @@
             messageHeader.appendChild(senderName);
             
             const messageContent = document.createElement('div');
-            // Convert Markdown to HTML using showdown
-            const converter = new showdown.Converter();
+            messageContent.className = 'message-content';
+            
+            // Configurar o conversor Markdown com opções personalizadas
+            const converter = new showdown.Converter({
+                tables: true,
+                tasklists: true,
+                strikethrough: true,
+                emoji: true,
+                underline: true,
+                ghCompatibleHeaderId: true,
+                parseImgDimensions: true,
+                simplifiedAutoLink: true,
+                excludeTrailingPunctuationFromURLs: true,
+                openLinksInNewWindow: true,
+                backslashEscapesHTMLTags: true,
+                smartIndentationFix: true
+            });
+            
+            // Converter Markdown para HTML
             const htmlMessage = converter.makeHtml(message);
-            messageContent.innerHTML = htmlMessage; // Use the converted HTML
+            
+            // Aplicar a formatação HTML
+            messageContent.innerHTML = htmlMessage;
             
             messageDiv.appendChild(messageHeader);
             messageDiv.appendChild(messageContent);

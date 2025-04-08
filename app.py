@@ -320,10 +320,19 @@ def chat():
                 CRITICAL INSTRUCTIONS:
                 1.  You MUST answer exclusively in Portuguese language (Portugal variant).
                 2.  When referring to information from a specific CV, you MUST mention both the filename AND include the URL as a clickable HTML link using the format: <a href="URL">filename</a>. Adhere strictly to this format.
+                3.  FORMAT YOUR RESPONSES IN A CLEAN, STRUCTURED WAY:
+                   - Use proper Markdown formatting for headings, lists, and emphasis
+                   - Organize information in clear sections with appropriate headings
+                   - Use bullet points or numbered lists for multiple items
+                   - Avoid unnecessary line breaks or excessive spacing
+                   - Use bold text for important information or conclusions
+                   - Format links properly as clickable HTML elements
+                4.  NEVER include raw HTML tags in your response text except for the required link format
+                5.  NEVER include unnecessary formatting characters or symbols
                 """},
                 {"role": "user", "content": chat_prompt}
             ],
-            temperature=0.3,
+            temperature=0.1,
             max_tokens=2000
         )
 
